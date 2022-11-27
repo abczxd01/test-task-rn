@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { DARK, GREY } from '../colors';
+
+const postIcon = require('../../assets/post_icon.png');
 
 const Author = ({ name, email }) => {
   return (
@@ -10,8 +12,9 @@ const Author = ({ name, email }) => {
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.email}>{email}</Text>
       </View>
-      <TouchableOpacity>
-        <Text style={styles.postCount}>{'5 posts >'}</Text>
+      <TouchableOpacity style={styles.postButton}>
+        <Text style={styles.postCount}>{'5 posts'}</Text>
+        <Image source={postIcon} style={styles.postIcon} />
       </TouchableOpacity>
     </View>
   );
@@ -53,5 +56,14 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: DARK,
   },
+  postButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  postIcon: {
+    marginTop: 3,
+    marginLeft: 8,
+  },
 });
+
 export default Author;

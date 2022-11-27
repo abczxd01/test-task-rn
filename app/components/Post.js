@@ -28,4 +28,5 @@ const styles = StyleSheet.create({
     marginTop: 9,
   },
 });
+
 export default Post;
