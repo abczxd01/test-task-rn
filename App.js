@@ -1,17 +1,15 @@
 import React from 'react';
 
 import {
-  FlatList,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   useColorScheme,
 } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import Author from './app/components/Author';
-import Post from './app/components/Post';
+import Authors from './app/screens/Authors';
+import Posts from './app/screens/Posts';
 
 const testData = [
   {
@@ -20,8 +18,23 @@ const testData = [
     text: 'Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak',
   },
   {
-    title: 'Test1',
+    title: 'Test',
     id: 'item2',
+    text: 'Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak',
+  },
+  {
+    title: 'Test',
+    id: 'item3',
+    text: 'Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak',
+  },
+  {
+    title: 'Test',
+    id: 'item4',
+    text: 'Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak',
+  },
+  {
+    title: 'Test1',
+    id: 'item5',
     text: 'Asdsds test big boy ololshak Asdsds test big boy ololshakAsdsds test big boy ololshak',
   },
 ];
@@ -41,10 +54,6 @@ const testData2 = [
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const renderPost = ({ item }) => <Post title={item.title} body={item.text} />;
-  const renderAuthor = ({ item }) => (
-    <Author name={item.name} email={item.email} />
-  );
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -56,23 +65,16 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView contentInsetAdjustmentBehavior="automatic" />
-      <FlatList
-        data={testData}
-        keyExtractor={item => item.id}
-        renderItem={renderPost}
-      />
-      <FlatList
-        data={testData2}
-        keyExtractor={item => item.id}
-        renderItem={renderAuthor}
-      />
+      <Authors data={testData2} />
+      <Posts data={testData} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  backgroundColor: { backgroundColor: '#fff' },
+  backgroundColor: {
+    backgroundColor: '#fff',
+  },
 });
 
 export default App;

@@ -5,6 +5,8 @@ import { DARK, GREY } from '../colors';
 const postIcon = require('../../assets/post_icon.png');
 
 const Author = ({ name, email }) => {
+  const onPress = () => {};
+
   return (
     <View style={styles.container}>
       <View style={styles.photo} />
@@ -12,7 +14,7 @@ const Author = ({ name, email }) => {
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.email}>{email}</Text>
       </View>
-      <TouchableOpacity style={styles.postButton}>
+      <TouchableOpacity style={styles.postButton} onPress={onPress}>
         <Text style={styles.postCount}>{'5 posts'}</Text>
         <Image source={postIcon} style={styles.postIcon} />
       </TouchableOpacity>
@@ -23,7 +25,6 @@ const Author = ({ name, email }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingHorizontal: 16,
     alignItems: 'center',
     paddingTop: 14,
     paddingBottom: 16,
