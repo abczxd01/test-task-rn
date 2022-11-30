@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  FlatList,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import { StyleSheet, Text, FlatList, SafeAreaView } from 'react-native';
 import Post from '../components/Post';
 import SearchInput from '../components/SearchInput';
 
@@ -19,7 +12,6 @@ const Posts = ({ data }) => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{'James Smith’s Posts'}</Text>
       <SearchInput onChangeText={onChangeText} text={text} />
-      {/* Made scroll */}
       <FlatList
         data={data}
         keyExtractor={item => item.id}
@@ -32,6 +24,7 @@ const Posts = ({ data }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingHorizontal: 16,
   },
   title: {

@@ -14,7 +14,6 @@ const Authors = ({ data }) => {
     <View style={styles.container}>
       <Text style={styles.title}>{'Authors'}</Text>
       <SearchInput onChangeText={onChangeText} text={text} />
-      {/* Made scroll */}
       <FlatList
         data={data}
         keyExtractor={item => item.id}
@@ -28,6 +27,7 @@ const Authors = ({ data }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
+    flex: 1,
   },
   title: {
     marginTop: 12,

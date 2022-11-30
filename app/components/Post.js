@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 12,
     borderWidth: 1,
+    flex: 1,
     borderColor: 'rgba(0,0,0,0.1)',
   },
   title: {
