@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -22,7 +22,6 @@ const Posts = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>{'James Smith’s Posts'}</Text>
       <SearchInput onChangeText={onChangeText} text={text} />
       <FlatList
         data={posts}
@@ -38,13 +37,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 24,
-    color: '#000000',
-    marginBottom: 16,
   },
   posts: {
     marginTop: 8,

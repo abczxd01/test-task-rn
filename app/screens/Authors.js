@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
@@ -23,7 +23,6 @@ const Authors = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{'Authors'}</Text>
       <SearchInput onChangeText={onChangeText} text={text} />
       <FlatList
         data={users}
@@ -38,15 +37,8 @@ const Authors = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
+    backgroundColor: '#fff',
     flex: 1,
-  },
-  title: {
-    marginTop: 12,
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 24,
-    color: '#000000',
-    marginBottom: 16,
   },
   authors: {
     marginTop: 8,
