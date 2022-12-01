@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 import Author from '../components/Author';
 import SearchInput from '../components/SearchInput';
+import { fetchUsers } from '../store/usersSlice';
 
-const Authors = ({ data }) => {
+const Authors = () => {
   const [text, onChangeText] = useState('');
+  const dispatch = useDispatch();
+  const users = useSelector(state => state.users.users);
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderAuthor = ({ item }) => (
     <Author name={item.name} email={item.email} />
@@ -15,7 +26,7 @@ const Authors = ({ data }) => {
       <Text style={styles.title}>{'Authors'}</Text>
       <SearchInput onChangeText={onChangeText} text={text} />
       <FlatList
-        data={data}
+        data={users}
         keyExtractor={item => item.id}
         renderItem={renderAuthor}
         style={styles.authors}
