@@ -4,9 +4,7 @@ import { DARK, GREY } from '../colors';
 
 const postIcon = require('../../assets/post_icon.png');
 
-const Author = ({ name, email }) => {
-  const onPress = () => {};
-
+const Author = ({ name, email, onPressAuthor }) => {
   return (
     <View style={styles.container}>
       <View style={styles.photo} />
@@ -14,8 +12,8 @@ const Author = ({ name, email }) => {
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.email}>{email}</Text>
       </View>
-      <TouchableOpacity style={styles.postButton} onPress={onPress}>
-        <Text style={styles.postCount}>{'5 posts'}</Text>
+      <TouchableOpacity style={styles.postButton} onPress={onPressAuthor}>
+        <Text style={styles.postCount}>{'9 posts'}</Text>
         <Image source={postIcon} style={styles.postIcon} />
       </TouchableOpacity>
     </View>
