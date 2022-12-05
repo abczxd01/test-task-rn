@@ -7,6 +7,14 @@ import Post from '../components/Post';
 import SearchInput from '../components/SearchInput';
 import { fetchPosts } from '../store/postsSlice';
 
+const findPost = (posts, text) => {
+  return posts.find(_post => {
+    const splittedTitle = _post.title.toLowerCase().split(' ');
+    const isPostFound = splittedTitle.find(word => word === text.toLowerCase());
+    return isPostFound;
+  });
+};
+
 const Posts = ({ route }) => {
   const { userId } = route.params;
   const [text, onChangeText] = useState('');
@@ -26,12 +34,7 @@ const Posts = ({ route }) => {
   }, [dispatch, text]);
 
   const onSubmitEditing = () => {
-    const post = posts.find(_post => {
-      const splittedTitle = _post.title.split(' ');
-      const isPostFound = splittedTitle.find(word => word === text);
-      return isPostFound;
-    });
-
+    const post = findPost(posts, text);
     setCurrentPost(post);
   };
 

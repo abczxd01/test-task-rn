@@ -7,6 +7,23 @@ import Author from '../components/Author';
 import SearchInput from '../components/SearchInput';
 import { fetchUsers } from '../store/usersSlice';
 
+const findUser = (users, text) => {
+  return users.find(_user => {
+    const textLowerCase = text.toLowerCase();
+    const splittedName = _user.name.toLowerCase().split(' ');
+    const splittedEmail = _user.email.split('@');
+
+    const isNameFound =
+      _user.name === textLowerCase ||
+      splittedName[0] === textLowerCase ||
+      splittedName[1] === textLowerCase;
+    const isEmailFound =
+      _user.email === textLowerCase || splittedEmail[0] === textLowerCase;
+
+    return isNameFound || isEmailFound;
+  });
+};
+
 const Authors = ({ navigation }) => {
   const [text, onChangeText] = useState('');
   const [currentUser, setCurrentUser] = useState();
@@ -15,18 +32,7 @@ const Authors = ({ navigation }) => {
   const users = useSelector(state => state.users.users);
 
   const onSubmitEditing = () => {
-    const user = users.find(_user => {
-      const splittedName = _user.name.split(' ');
-      const splittedEmail = _user.email.split('@');
-      const isNameFound =
-        _user.name === text ||
-        splittedName[0] === text ||
-        splittedName[1] === text;
-      const isEmailFound = _user.email === text || splittedEmail[0] === text;
-
-      return isNameFound || isEmailFound;
-    });
-
+    const user = findUser(users, text);
     setCurrentUser(user);
   };
 
@@ -50,9 +56,7 @@ const Authors = ({ navigation }) => {
       name={item.name}
       email={item.email}
       id={item.id}
-      onPressAuthor={() => {
-        onPressAuthor(item.id);
-      }}
+      onPressAuthor={() => onPressAuthor(item.id)}
     />
   );
 
