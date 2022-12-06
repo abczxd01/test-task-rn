@@ -7,18 +7,19 @@ import Post from '../components/Post';
 import SearchInput from '../components/SearchInput';
 import { fetchPosts } from '../store/postsSlice';
 
-const findPost = (posts, text) => {
-  return posts.find(_post => {
-    const splittedTitle = _post.title.toLowerCase().split(' ');
-    const isPostFound = splittedTitle.find(word => word === text.toLowerCase());
-    return isPostFound;
-  });
+const filterPosts = (posts, text) => {
+  try {
+    return posts.filter(_post => {
+      const reg = new RegExp(`${text}`, 'i');
+      return reg.test(_post.title) || reg.test(_post.body);
+    });
+  } catch (error) {}
 };
 
-const Posts = ({ route }) => {
-  const { userId } = route.params;
+const Posts = ({ route, navigation }) => {
+  const { userId, authorName } = route.params;
   const [text, onChangeText] = useState('');
-  const [currentPost, setCurrentPost] = useState();
+  const [currentPosts, setCurrentPosts] = useState();
 
   const dispatch = useDispatch();
   const posts = useSelector(state => state.posts.posts);
@@ -28,14 +29,18 @@ const Posts = ({ route }) => {
   }, [dispatch, userId]);
 
   useEffect(() => {
+    navigation.setOptions({ headerTitle: `${authorName} Posts` });
+  }, [navigation, authorName]);
+
+  useEffect(() => {
     if (text === '') {
-      setCurrentPost(null);
+      setCurrentPosts(null);
     }
   }, [dispatch, text]);
 
   const onSubmitEditing = () => {
-    const post = findPost(posts, text);
-    setCurrentPost(post);
+    const foundPosts = filterPosts(posts, text);
+    setCurrentPosts(foundPosts);
   };
 
   const renderPost = ({ item }) => <Post title={item.title} body={item.body} />;
@@ -48,7 +53,7 @@ const Posts = ({ route }) => {
         text={text}
       />
       <FlatList
-        data={currentPost && text !== '' ? [currentPost] : posts}
+        data={currentPosts && text !== '' ? currentPosts : posts}
         keyExtractor={item => item.id}
         renderItem={renderPost}
         style={styles.posts}

@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     paddingHorizontal: 18,
     paddingVertical: 12,
+    borderWidth: 0,
     flex: 1,
     shadowColor: 'rgba(0,0,0,0.3)',
     shadowOffset: {

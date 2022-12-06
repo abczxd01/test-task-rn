@@ -7,38 +7,32 @@ import Author from '../components/Author';
 import SearchInput from '../components/SearchInput';
 import { fetchUsers } from '../store/usersSlice';
 
-const findUser = (users, text) => {
-  return users.find(_user => {
-    const textLowerCase = text.toLowerCase();
-    const splittedName = _user.name.toLowerCase().split(' ');
-    const splittedEmail = _user.email.split('@');
-
-    const isNameFound =
-      _user.name === textLowerCase ||
-      splittedName[0] === textLowerCase ||
-      splittedName[1] === textLowerCase;
-    const isEmailFound =
-      _user.email === textLowerCase || splittedEmail[0] === textLowerCase;
-
-    return isNameFound || isEmailFound;
-  });
+const filterUsers = (users, text) => {
+  try {
+    return users.filter(_user => {
+      const partEmail = _user.email.split('@')[0];
+      const reg = new RegExp(`${text}`, 'i');
+      return reg.test(_user.name) || reg.test(partEmail);
+    });
+  } catch (error) {}
 };
 
 const Authors = ({ navigation }) => {
   const [text, onChangeText] = useState('');
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUsers, setCurrentUsers] = useState();
 
   const dispatch = useDispatch();
   const users = useSelector(state => state.users.users);
 
   const onSubmitEditing = () => {
-    const user = findUser(users, text);
-    setCurrentUser(user);
+    const foundUsers = filterUsers(users, text);
+    setCurrentUsers(foundUsers);
   };
 
-  const onPressAuthor = userId =>
+  const onPressAuthor = (userId, authorName) =>
     navigation.navigate('Posts', {
       userId,
+      authorName,
     });
 
   useEffect(() => {
@@ -47,7 +41,7 @@ const Authors = ({ navigation }) => {
 
   useEffect(() => {
     if (text === '') {
-      setCurrentUser(null);
+      setCurrentUsers(null);
     }
   }, [dispatch, text]);
 
@@ -56,7 +50,7 @@ const Authors = ({ navigation }) => {
       name={item.name}
       email={item.email}
       id={item.id}
-      onPressAuthor={() => onPressAuthor(item.id)}
+      onPressAuthor={() => onPressAuthor(item.id, item.name)}
     />
   );
 
@@ -68,7 +62,7 @@ const Authors = ({ navigation }) => {
         onSubmitEditing={onSubmitEditing}
       />
       <FlatList
-        data={currentUser && text !== '' ? [currentUser] : users}
+        data={currentUsers && text !== '' ? currentUsers : users}
         keyExtractor={item => item.id}
         renderItem={renderAuthor}
         style={styles.authors}
